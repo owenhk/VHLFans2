@@ -18,4 +18,10 @@ app = fastapi.FastAPI(lifesan=lifespan)
 
 @app.post("/cheat_engine/fetch_answers")
 async def get_vhl_answers(request: Request):
+    # Use WebEngine to decode the HTML of the page
+    # Check CacheKit to see if the problem has already been solved
+    # Use AIEngine to determine how to solve each set of questions
+    # Pass AIEngine queries to QuizletEngine to get proper answers
+    # Add a background worker to save results in CacheEngine
+    # Pass the results back to the user, they cheated :)
     pass
