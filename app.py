@@ -6,10 +6,10 @@ import asyncpg
 # Create a FastAPI object with a init
 
 @asynccontextmanager
-async def lifespan(app: fastapi.FastAPI):
+async def lifespan(api: fastapi.FastAPI):
     # Code to run on startup, initialize the postgres connection pool
     print("Starting up...")
-    app.state.con = await asyncpg.create_pool("", max_size=20)
+    api.state.con = await asyncpg.create_pool("", max_size=20)
     yield
     # Code to run on shutdown
     print("Shutting down...")
