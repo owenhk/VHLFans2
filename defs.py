@@ -24,13 +24,13 @@ class Question(BaseModel):
     selector: str
     type: str
     question: str
+    options: Optional[list[str]] = None
 
 class Input(BaseModel):
     questions: list[Question]
     lesson_id: str
     lesson_name: str
     unit: str
-    options: Optional[list[str]] = None
 
 class QuizletFlashcard(BaseModel):
     front: str

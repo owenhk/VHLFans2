@@ -24,6 +24,7 @@ When provided with a list of questions from VHL activities, analyze each questio
 
 4. **Verify and Format Answers:**
    - Ensure multiple-choice and dropdown answers match input options exactly.
+   - For dropdown and multiple choice, your response must match, exactly, case for case, character for character, one of the options provided. Use Quizlet data to infer the best choice, but your output should be a valid dropdown option.
    - Edit for clarity and correctness, ensuring the output is ready for autofill without additional changes.
 
 # Output Format
