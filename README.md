@@ -36,30 +36,25 @@ This is the boring, overly complex, spaghetti coded part of VHLFans. Essentially
 ### How is this different from the main VHLFans extension?
 This is the actual brains of VHLFans. VHLFans extension is essentially just a button that's added to your VHL Central activity, and when you click it, *Unicorn* by Noa Kirel (yep - that's the song! Israel's 2023 Eurovision entry) plays and a request gets sent to our server.
 ___
-
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
+### Can I run VHLFans server myself?
+Yes! There's no reason you should, but you can absolutely. Check out the getting started section below for more information :)
+___
+### Why *shouldn't* I run VHLFans myself?
+VHLFans uses powerful, expensive technology to autofill VHL Central activities. Quizlet data is scraped using proxies, which, due to a *incredibly, incredibly* generous arrangement with ScraperAPI, is free for me to do, but would cost upwards of $50/mo to self-host. Furthermore, VHLFans is powered by OpenAI. OpenAI API keys are *super cheap*, but why not let me front the super cheap? 
+___
+### ELI5 how the server works!
+The server takes your questions and sends them to GPT (see agents.py for the code!) OpenAI then calls two custom functions - search Quizlet and/or fetch lesson vocabulary (both happens in SERPer.py.) Searching Quizlet does exact what you used to do with VHL activates - it searches for a Quizlet deck with reliable answers. When VHL has a stupid creative writing prompt, our friends at OpenAI call fetch_vocabulary so the response it creates is relevant to the lesson and gets you an A!  
+___
 
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
+VHLFans is made possible by people *far* smarter than me, but the most important one is ScraperAPI. Quizlet blocks normal bots from going to their website (rightfully so,) so we take advanced measures to disguise oursevles as normal people. Well, we don't, I'm not bright enough to, but ScraperAPI does. And they're generous enough to waive the cost for VHLFans, including for advanced JavaScript rendering features that costs them money. I'm beyond indebted to their amazing team. Check them out for all your scraping needs!
 
-* [![Next][Next.js]][Next-url]
-* [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
+* [![ScraperAPI][ScraperAPI]][ScraperAPI-url] - The GOATs 👑
+* [![PyCharm][PyCharm]][Jetbrains-url]
+* [![Python][Python]][Python-url]
+* [![OpenAI][OpenAI]][OpenAI-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -68,67 +63,44 @@ This section should list any major frameworks/libraries used to bootstrap your p
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Self-hosting VHLFans is *incredibly* easy! It does require some coding knowledge, but feel free to message me on GitHub if you want help setting it up.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+You'll need Python, which you can download at https://python.org.
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
-
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/github_username/repo_name.git
+Here comes the major life choice: do you use our preview or main branch? I push buggy, bad, code to our preview branch (which, FYI, you're *not* supposed to do), but our main branch is tested and stable. I'd recommend cloning the main one.
+1. Clone the repo
+<br>**Preview (⚠️ at your own risk!):**
+    ```sh
+   git clone https://github.com/owenhk/VHLFans2/tree/preview
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+   **Stable**
+    ```sh
+   git clone https://github.com/owenhk/VHLFans2/tree/main
+    ```
+2. Install requirements - Don't worry, it's not that big!
+    ```sh
+   pip3 install requirements.txt
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-5. Change git remote url to avoid accidental pushes to base project
-   ```sh
-   git remote set-url origin github_username/repo_name
-   git remote -v # confirm the changes
-   ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
+3. Set your environment variables.
+   1. ``DATABASE_URL`` - Your Postgres database URL (I recommend using [Railway](https://railway.com)), you can deploy one in like 15 seconds and then just copy the `DATABASE_URL`.
+   2. ``OPENAI_API_KEY`` - Your OpenAI API key, get one at https://platform.openai.com
+   3. ``SCRAPER_API_KEY`` - Your ScraperAPI key, which you can get at https://scraperapi.com/ - This is the expensive one.
+   4. ``SERP_API_KEY`` - Your SerperDEV API key, which you can get at https://serper.dev
+4. Power up!
+    ```sh
+   path/to/VHLFANs/VHLFans2/.venv/bin/python -m uvicorn app:app --reload
+    ```
 
 <!-- ROADMAP -->
 ## Roadmap
+- [ ] AI voice generation with ElevenLabs to do speaking homework for you!
+- [ ] Better caching linked to lessons instead of decks to reduce times significantly
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/owenhk/VHLFans2/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -150,50 +122,18 @@ Don't forget to give the project a star! Thanks again!
 
 ### Top contributors:
 
-<a href="https://github.com/othneildrew/Best-README-Template/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=othneildrew/Best-README-Template" alt="contrib.rocks image" />
+<a href="https://github.com/owenhk/VHLFans2/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=owenhk/VHLFans2" alt="contrib.rocks image" />
 </a>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- LICENSE -->
 ## License
 
-Distributed under the Unlicense License. See `LICENSE.txt` for more information.
+Distributed under the VHLFans ALMOST UN-LICENSED. See `LICENSE.txt` for more information.<br>FYI - this means you can do **whatever** the hell you want with this (unless you work for Vistas Higher Learning and want to patch it.)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- CONTACT -->
-## Contact
-
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
-
-Project Link: [https://github.com/your_username/repo_name](https://github.com/your_username/repo_name)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
@@ -211,19 +151,11 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-shield]: https://img.shields.io/badge/-Shameless_plug_😉-black.svg?style=for-the-badge&logo=instagram&colorB=b54cf0
 [linkedin-url]: https://instagram.com/owenhillsklaus
 [product-screenshot]: images/screenshot.png
-[Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
-[Next-url]: https://nextjs.org/
-[React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
-[React-url]: https://reactjs.org/
-[Vue.js]: https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D
-[Vue-url]: https://vuejs.org/
-[Angular.io]: https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white
-[Angular-url]: https://angular.io/
-[Svelte.dev]: https://img.shields.io/badge/Svelte-4A4A55?style=for-the-badge&logo=svelte&logoColor=FF3E00
-[Svelte-url]: https://svelte.dev/
-[Laravel.com]: https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white
-[Laravel-url]: https://laravel.com
-[Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
-[Bootstrap-url]: https://getbootstrap.com
-[JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[ScraperAPI]: https://img.shields.io/badge/ScraperAPI-1c22db?style=for-the-badge&logo=gnometerminal&logoColor=white
+[ScraperAPI-url]: https://scraperapi.com
+[PyCharm]: https://img.shields.io/badge/PyCharm-5bc3e2?style=for-the-badge&logo=pycharm
+[Jetbrains-url]: https://jetbrains.com/
+[Python]: https://img.shields.io/badge/Python_3.12-294360?style=for-the-badge&logo=python&logoColor=fae172
+[Python-url]: https://vuejs.org/
+[OpenAI]: https://img.shields.io/badge/Powered_by_OpenAI-bac5dd?style=for-the-badge&logo=openai&logoColor=black
+[OpenAI-url]: https://openai.com/

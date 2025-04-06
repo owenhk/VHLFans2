@@ -2,15 +2,12 @@ import fastapi
 from fastapi import Request
 from contextlib import asynccontextmanager
 import asyncpg
-from dotenv import load_dotenv
 import os
 from fastapi.middleware.cors import CORSMiddleware
 import aiohttp
-from playwright.async_api import Playwright, async_playwright
 from AIEngine import agent
 from defs import VHLFans, Input
 
-load_dotenv()
 
 # Create a FastAPI object with a init
 
@@ -24,7 +21,6 @@ async def lifespan(service: VHLFans):
     service.con = await asyncpg.create_pool(pool_url,
                                             max_size=20)
     service.tcp_connector = aiohttp.TCPConnector(limit=50)
-    service.pw = await async_playwright().start()
     yield
     # Code to run on shutdown
     print("Shutting down...")
