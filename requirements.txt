@@ -4,3 +4,4 @@ aiohttp~=3.11.13
 pydantic~=2.10.6
 openai~=1.66.2
 beautifulsoup4~=4.13.3
+uvicorn~=0.34.0
