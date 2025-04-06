@@ -4,7 +4,6 @@ from pydantic import BaseModel, Field
 import os
 import asyncpg
 import aiohttp
-from playwright.async_api import Playwright
 import openai
 from typing import Optional
 
@@ -17,7 +16,6 @@ class VHLFans(fastapi.FastAPI):
         self.ai = openai.AsyncClient(api_key=os.getenv("OPENAI_API_KEY"))
         self.serp_api_key = os.getenv("SERP_API_KEY")
         self.scraper_api_key = os.getenv("SCRAPER_API_KEY")
-        self.pw: Optional[Playwright] = None
 
 class Question(BaseModel):
     id: str = Field(default_factory=lambda: os.urandom(32).hex())
