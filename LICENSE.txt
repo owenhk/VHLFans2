@@ -24,7 +24,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 For more information, please refer to <https://unlicense.org>
 
-* EXCEPTION: If you are an employee of VHLFans or are completing work for VHLFans, this license does ***not*** apply to you. If this is the case, all rights belong exclusively to Owen Hills-Klaus.
+* EXCEPTION: If you are an employee of Vistas Higher Learning or are completing work for VHL, this license does ***not*** apply to you. If this is the case, all rights belong exclusively to Owen Hills-Klaus.
 You may NOT use VHLFans if you are an employee of Vistas or contributing to the VHLCentral GitHub as a way to patch VHL to prevent this extension from being used.
 
 Guide to license 😁
