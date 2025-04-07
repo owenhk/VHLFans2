@@ -1,4 +1,3 @@
-import pydantic
 import fastapi
 from pydantic import BaseModel, Field
 import os
