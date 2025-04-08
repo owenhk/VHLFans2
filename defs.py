@@ -1,13 +1,12 @@
-import pydantic
 import fastapi
 from pydantic import BaseModel, Field
 import os
 import asyncpg
 import aiohttp
-import openai
+import  openai
 from typing import Optional
 
-
+        
 class VHLFans(fastapi.FastAPI):
     def __init__(self, *args, **kwargs):
         self.con: Optional[asyncpg.Pool] = kwargs.pop("con", None)
