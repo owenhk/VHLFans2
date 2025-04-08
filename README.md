@@ -83,7 +83,7 @@ Here comes the major life choice: do you use our preview or main branch? I push 
     ```
 2. Install requirements - Don't worry, it's not that big!
     ```sh
-   pip3 install requirements.txt
+   pip3 install -r requirements.txt
    ```
 3. Set your environment variables.
    1. ``DATABASE_URL`` - Your Postgres database URL (I recommend using [Railway](https://railway.com)), you can deploy one in like 15 seconds and then just copy the `DATABASE_URL`.
