@@ -7,5 +7,4 @@ profile:
 include:
   - name: CheckDependencyLicenses
 
-env:
-  python.auto-install-packages: true
+bootstrap: pip install -r requirements.txt
