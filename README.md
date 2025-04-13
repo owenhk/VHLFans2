@@ -12,7 +12,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
+  <a href="https://vhlfans.com/">
     <img src="https://ununiquestorage.sfo2.cdn.digitaloceanspaces.com/VHLFansTextmark.png" alt="Logo" height="80">
   </a>
 
@@ -75,11 +75,11 @@ Here comes the major life choice: do you use our preview or main branch? I push 
 1. Clone the repo
 <br>**Preview (⚠️ at your own risk!):**
     ```sh
-   git clone https://github.com/owenhk/VHLFans2/tree/preview
+   git clone -b preview https://github.com/owenhk/VHLFans2/tree
    ```
    **Stable**
     ```sh
-   git clone https://github.com/owenhk/VHLFans2/tree/main
+   git clone -b main https://github.com/owenhk/VHLFans2/tree/main
     ```
 2. Install requirements - Don't worry, it's not that big!
     ```sh
@@ -156,6 +156,6 @@ Distributed under the VHLFans ALMOST UN-LICENSED. See `LICENSE.txt` for more inf
 [PyCharm]: https://img.shields.io/badge/PyCharm-5bc3e2?style=for-the-badge&logo=pycharm
 [Jetbrains-url]: https://jetbrains.com/
 [Python]: https://img.shields.io/badge/Python_3.12-294360?style=for-the-badge&logo=python&logoColor=fae172
-[Python-url]: https://vuejs.org/
+[Python-url]: https://python.org/
 [OpenAI]: https://img.shields.io/badge/Powered_by_OpenAI-bac5dd?style=for-the-badge&logo=openai&logoColor=black
 [OpenAI-url]: https://openai.com/

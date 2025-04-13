@@ -1,8 +1,11 @@
 import unittest
 import asyncio
+
+import AIEngine
 from app import VHLFans, Input
 from WebEngine import SERPer
 import asyncpg
+from FunKit import MusicStreamer
 import os
 from defs import Question
 from AIEngine import agent
@@ -14,7 +17,6 @@ class MyTestCase(unittest.IsolatedAsyncioTestCase):
 
     async def asyncTearDown(self):
         await self.con.close()
-
     async def test_ai_engine(self):
         questions = [
             Question(
@@ -98,6 +100,13 @@ class MyTestCase(unittest.IsolatedAsyncioTestCase):
             service=VHLFans(con=self.con)
         )
         print(o)
+        self.assertIsInstance(o, AIEngine.Response)
+
+    async def test_fetch_song(self):
+        song = await MusicStreamer.fetch_song()
+        print(song)
+        self.assertIsNotNone(song)
+
 
 if __name__ == '__main__':
     unittest.main()
