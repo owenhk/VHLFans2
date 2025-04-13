@@ -45,7 +45,7 @@ async def get_vhl_answers(request: Request):
 
 @app.get("/get_some_fun")
 async def fun_kit():
-    song_url = MusicStreamer.fetch_song()
+    song_url = await MusicStreamer.fetch_song()
     return {
         "loading_song": song_url
     }
