@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import aiohttp
 from AIEngine import agent
 from defs import VHLFans, Input
+from FunKit import MusicStreamer
 
 
 # Create a FastAPI object with a init
@@ -41,4 +42,10 @@ async def get_vhl_answers(request: Request):
     input_obj = Input.model_validate(request_body)
     solution = await agent.start_ai_solver(input_obj, request.app)
     return solution.model_dump()
-    
+
+@app.get("/get_some_fun")
+async def fun_kit():
+    song_url = await MusicStreamer.fetch_song()
+    return {
+        "loading_song": song_url
+    }
