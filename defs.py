@@ -12,6 +12,7 @@ class VHLFans(fastapi.FastAPI):
         self.con: Optional[asyncpg.Pool] = kwargs.pop("con", None)
         super().__init__(*args, **kwargs)
         self.tcp_connector: Optional[aiohttp.TCPConnector] = None
+        self.client_session: Optional[aiohttp.ClientSession] = None
         self.ai = openai.AsyncClient(api_key=os.getenv("OPENAI_API_KEY"))
         self.serp_api_key = os.getenv("SERP_API_KEY")
         self.scraper_api_key = os.getenv("SCRAPER_API_KEY")

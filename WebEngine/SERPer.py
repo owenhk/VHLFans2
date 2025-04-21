@@ -12,18 +12,19 @@ class Query(pydantic.BaseModel):
 
 
 async def fetch_quizlet_deck(query: Query, service: VHLFans) -> QuizletDeck:
-    async with aiohttp.ClientSession(connector=service.tcp_connector) as session:
-        questions_formatted_as_string = " ".join(query.questions)
-        params = {
-            "q": "site:quizlet.com " + f" VHL {query.activity_name} {query.lesson_number} {questions_formatted_as_string}"
-        }
-        headers = {
-            "X-API-Key": service.serp_api_key,
-            "Content-Type": "application/json"
-        }
-        async with session.post("https://google.serper.dev/search", params=params, headers=headers) as r:
-            results = await r.json()
-            print(results)
+    questions_formatted_as_string = " ".join(query.questions)
+    params = {
+        "q": "site:quizlet.com " + f" VHL {query.activity_name} {query.lesson_number} {questions_formatted_as_string}"
+    }
+    if len(params['q']) > 2048:
+        params['q'] = params['q'][:2048]
+    headers = {
+        "X-API-Key": service.serp_api_key,
+        "Content-Type": "application/json"
+    }
+    async with service.client_session.post("https://google.serper.dev/search", params=params, headers=headers) as r:
+        results = await r.json()
+        print(results)
 
     top_score = 0
     cached_result = None
@@ -48,6 +49,7 @@ async def fetch_quizlet_deck(query: Query, service: VHLFans) -> QuizletDeck:
                            " Your score, out of 10, is entirely reflectant on the flashcards ability to answer the questions in the lesson."
                            " A score of 1 means the deck is useless, it answers no questions, 10 means it contains the answers to all questions in the lesson, and anything in between means it gets close. Remember, too many answers, the order, or how it's laid out, doesn't matter."
                            " Your response must only contain a number, between 1 and 10, written as an integer without any text or explanation."
+                           " Most of the time, the first result you're passed is perfect, don't overthink it. Look at if all the vocabulary and words are present, not the nitty gritty of how it's presented. A score of under 8 means the user has to wait another 15 seconds, so consider that when grading."
             },
             {
                 "role": "user",
@@ -83,7 +85,7 @@ async def fetch_quizlet_deck(query: Query, service: VHLFans) -> QuizletDeck:
     return cached_result if cached_result else None
 
 async def QuizletScrape(url: str, service: VHLFans) -> QuizletDeck:
-    quizlet = await fetch_web_html(url, service)
+    quizlet = await tml(url, service, service.client_session)
     soup = BeautifulSoup(quizlet, 'html.parser')
 
     flashcards = []
@@ -104,28 +106,27 @@ async def fetch_unit_vocabulary(unit: str, service: VHLFans) -> QuizletDeck:
     results = await uploadtocache.fetch_lesson_vocabulary(unit, service)
     if len(results.flashcards) > 0:
         return results
-    async with aiohttp.ClientSession(connector=service.tcp_connector) as session:
-        params = {
-            "q": f"site:quizlet.com {unit} VHL Vocabulary"
-        }
-        headers = {
-            "X-API-Key": service.serp_api_key,
-            "Content-Type": "application/json"
-        }
-        async with session.post("https://google.serper.dev/search", params=params, headers=headers) as r:
-            results = await r.json()
-            result = results["organic"][0]
-            cards = await QuizletScrape(result["link"], service)
-            await uploadtocache.upload_lesson_vocabulary(unit, cards, service)
-            return cards
+    params = {
+        "q": f"site:quizlet.com {unit} VHL Vocabulary"
+    }
+    headers = {
+        "X-API-Key": service.serp_api_key,
+        "Content-Type": "application/json"
+    }
+    async with service.client_session.post("https://google.serper.dev/search", params=params, headers=headers) as r:
+        results = await r.json()
+        result = results["organic"][0]
+        cards = await QuizletScrape(result["link"], service)
+        await uploadtocache.upload_lesson_vocabulary(unit, cards, service)
+        return cards
 
-async def fetch_web_html(url: str, service: VHLFans) -> str:
-    async with aiohttp.ClientSession(connector=service.tcp_connector) as session:
-        payload = {
-            "api_key": service.serp_api_key,
-            "url": url,
-            "render": 'true'
-        }
-        async with session.get("https://api.scraperapi.com/", params=payload) as r:
-            text = await r.text()
-            return text
+async def tml(url: str, service: VHLFans, session: aiohttp.ClientSession) -> str:
+    print(f"Preparting to scrape {url} ")
+    payload = {
+        "api_key": service.scraper_api_key,
+        "url": url,
+        "render": 'true'
+    }
+    async with session.get("https://api.scraperapi.com/", params=payload) as r:
+        print(r)
+        return await r.text()

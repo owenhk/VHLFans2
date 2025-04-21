@@ -34,7 +34,7 @@ This is the boring, overly complex, spaghetti coded part of VHLFans. Essentially
 **Top *server* FAQs:**
 
 ### How is this different from the main VHLFans extension?
-This is the actual brains of VHLFans. VHLFans extension is essentially just a button that's added to your VHL Central activity, and when you click it, *Unicorn* by Noa Kirel (yep - that's the song! Israel's 2023 Eurovision entry) plays and a request gets sent to our server.
+This is the actual brains of VHLFans. VHLFans extension is essentially just a button that's added to your VHL Central activity, and when you click it, various loading music plays (Unicorn by Noa Kirel, Toy by Netta, and several Kahoot theme songs!)
 ___
 ### Can I run VHLFans server myself?
 Yes! There's no reason you should, but you can absolutely. Check out the getting started section below for more information :)
