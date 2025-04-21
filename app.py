@@ -22,6 +22,7 @@ async def lifespan(service: VHLFans):
     service.con = await asyncpg.create_pool(pool_url,
                                             max_size=20)
     service.tcp_connector = aiohttp.TCPConnector(limit=50)
+    service.client_session = aiohttp.ClientSession(connector=service.tcp_connector)
     yield
     # Code to run on shutdown
     print("Shutting down...")
@@ -40,7 +41,9 @@ app.add_middleware(
 async def get_vhl_answers(request: Request):
     request_body = await request.json()  # Fetch the request body
     input_obj = Input.model_validate(request_body)
+    print(input_obj.questions)
     solution = await agent.start_ai_solver(input_obj, request.app)
+    print(solution.model_dump())
     return solution.model_dump()
 
 @app.get("/get_some_fun")

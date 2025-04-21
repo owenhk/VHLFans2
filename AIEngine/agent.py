@@ -86,5 +86,6 @@ async def start_ai_solver(input: Input, service: VHLFans) -> AIEngine.Response:
         AIEngine.Answer(selector=q.selector, type=q.type, answer=a.answer)
         for q, a in zip(input.questions, obj.response)
     ]
+    print(answers)
 
     return AIEngine.Response(answers=answers)

@@ -61,7 +61,8 @@ The output should be a JSON array with the structure:
 
 - Adjust or reformat answers as needed to fit expected output formats (e.g., accents).
 - Ensure exact text matching for dropdown and multiple-choice questions.
-- Use common sense to address minor inconsistencies in found resources.
+- Use common sense to address minor inconsistencies in found resources
+- Start broad when doing a find_quizlet function, normally you can batch every non-creative question in one request, which saves time. If that doesn't yield responses, then invoke the function more specifically.
 """
 
 tools = [
